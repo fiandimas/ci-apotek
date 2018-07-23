@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class TA_Apotek extends CI_Controller {
 
-	public function index()
+	public function index() 
 	{
 		$this->load->view('lta_apotek');
 	}
@@ -31,7 +31,44 @@ class TA_Apotek extends CI_Controller {
 		$this->load->model('m_apotek');
 		$this->m_apotek->m_login();
 	}
+	public function cart()
+	{
+		if($this->input->post('update')){
+			for($i=0;$i<count($this->input->post('rowid'));$i++){
+				$data = array(
+					'rowid' => $this->input->post('rowid')[$i],
+					'qty'   => $this->input->post('qty')[$i]
+				);
+				$this->cart->update($data);
+			}
+			redirect('ta_apotek/load_transaksi','refresh');		
+		}else
+		if($this->input->post('delete')){
+			$data = array(
+				'rowid' => $this->input->post('rowid'),
+				'qty'   => 0
+			);
+		
+			$stokNow = $this->db->where('id_obat', $this->input->post('id_obat'))->get('obat')->row();
+			$result = $stokNow->stok + $this->input->post('jumlah');
+			$update = $this->db->where('id_obat',$this->input->post('id_obat'))->update('obat',array('stok' => $result));
 
+			$this->cart->update($data);
+			redirect('ta_apotek/load_transaksi','refresh');
+		}else
+		if($this->input->post('clear')){
+			foreach ($this->cart->contents() as $obat){
+				$row = $this->cart->get_item($obat['rowid']);
+
+				$stokNow = $this->db->where('id_obat', $row['id'])->get('obat')->row();
+				$result = $stokNow->stok + $this->input->post('jumlah');
+				$update = $this->db->where('id_obat',$row['id'])->update('obat',array('stok' => $result));
+			}
+
+			$this->cart->destroy();
+			redirect('ta_apotek/load_transaksi','refresh');
+		}
+	}
 	public function add_cart($id)
 	{
 		$this->load->model('m_apotek');
@@ -44,28 +81,22 @@ class TA_Apotek extends CI_Controller {
 			'name'    => $query->nama_obat
 		);
 		
+		$obat = $this->db->where('id_obat', $id)->get('obat')->row();
+
+		$result = $obat->stok - $data['qty'];
+
+		$update = $this->db->where('id_obat', $id)->update('obat',array('stok' => $result));
 		$this->cart->insert($data);
-		redirect('ta_apotek/load_transaksi','refresh');
+		redirect('ta_apotek/load_transaksi/'.$result,'refresh');
 			
 	}
 
 	public function clear_cart()
-	{
+	{	
+		
 		$this->cart->destroy();
 		redirect('ta_apotek/load_transaksi','refresh');
 	}
-
-	public function delete_cart($id)
-	{	
-		$data = array(
-			'rowid' => $id,
-			'qty'   => 0
-		);
-		
-		$this->cart->update($data);
-		redirect('ta_apotek/load_transaksi','refresh');
-	}
-
 	public function update_cart()
 	{
 		
@@ -94,6 +125,10 @@ class TA_Apotek extends CI_Controller {
 					$this->m_apotek->m_simpan_cart();
 					redirect('ta_apotek/load_history','refresh');
 				}
+			}
+			else
+				if($this->input->post('')){
+
 			}
 	}
 

@@ -20,7 +20,7 @@ class M_apotek extends CI_Model {
 								 ->get('kasir')
 								 ->row();				 
 
-				if($data > 0){
+				if($data > 0){ 
 					$session = array(
 						'login'			=> true,
 						'nama_kasir'	=> $query->nama_kasir

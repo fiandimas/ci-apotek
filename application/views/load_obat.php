@@ -8,7 +8,7 @@
 			<tr>
 				<th>No</th>
 				<th>Nama Obat</th>
-				<th>Jenis</th>
+				<th>Jenis</th> 
 				<th>Harga</th>
 				<th>Stok</th>
 				<th>Aksi</th>
