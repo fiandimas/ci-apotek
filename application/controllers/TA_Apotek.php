@@ -19,7 +19,12 @@ class TA_Apotek extends CI_Controller {
 		$data['konten']="load_transaksi";
 		$this->load->view('ita_apotek',$data);
 	}
-
+	public function cek()
+	{
+		foreach ($this->cart->contents() as $key) {
+			echo "<br>".$key['rowid'];
+		}
+	}
 	public function load_history()
 	{
 		$data['konten']="load_history";
@@ -39,32 +44,45 @@ class TA_Apotek extends CI_Controller {
 					'rowid' => $this->input->post('rowid')[$i],
 					'qty'   => $this->input->post('qty')[$i]
 				);
-				$this->cart->update($data);
+				if($this->input->post('quantity')[$i] != $this->input->post('qty')[$i]){
+					$stokNow = $this->db->where('id_obat', $this->input->post('id_obat')[$i])->get('obat')->row();
+
+					if($this->input->post('qty')[$i] >  $this->input->post('quantity')[$i]){
+						$obat = $this->input->post('qty')[$i] - $this->input->post('quantity')[$i];
+						$result = $stokNow->stok - $obat;
+						$update = $this->db->where('id_obat',$this->input->post('id_obat')[$i])->update('obat',array('stok' => $result));
+						$this->cart->update($data);
+					}
+					else{
+						$obat = $this->input->post('quantity')[$i] - $this->input->post('qty')[$i];
+						$result = $stokNow->stok + $obat;
+						$update = $this->db->where('id_obat',$this->input->post('id_obat')[$i])->update('obat',array('stok' => $result));
+						$this->cart->update($data);
+					}
+				}
 			}
-			redirect('ta_apotek/load_transaksi','refresh');		
+			redirect('ta_apotek/load_transaksi','refresh');			
 		}else
 		if($this->input->post('delete')){
 			$data = array(
-				'rowid' => $this->input->post('rowid'),
+				'rowid' => $this->input->post('row_id'),
 				'qty'   => 0
 			);
 		
-			$stokNow = $this->db->where('id_obat', $this->input->post('id_obat'))->get('obat')->row();
+			$stokNow = $this->db->where('id_obat', $this->input->post('idobat'))->get('obat')->row();
 			$result = $stokNow->stok + $this->input->post('jumlah');
-			$update = $this->db->where('id_obat',$this->input->post('id_obat'))->update('obat',array('stok' => $result));
+			$update = $this->db->where('id_obat',$this->input->post('idobat'))->update('obat',array('stok' => $result));
 
 			$this->cart->update($data);
 			redirect('ta_apotek/load_transaksi','refresh');
 		}else
 		if($this->input->post('clear')){
-			foreach ($this->cart->contents() as $obat){
-				$row = $this->cart->get_item($obat['rowid']);
-
-				$stokNow = $this->db->where('id_obat', $row['id'])->get('obat')->row();
-				$result = $stokNow->stok + $this->input->post('jumlah');
-				$update = $this->db->where('id_obat',$row['id'])->update('obat',array('stok' => $result));
+			for($i=0;$i<count($this->input->post('rowid'));$i++){
+				$obatCart = $this->input->post('qty')[$i];
+				$obatDb = $this->db->where('id_obat', $this->input->post('id_obat')[$i])->get('obat')->row();
+				$obat = $obatCart + $obatDb->stok;
+				$obatDb = $this->db->where('id_obat', $this->input->post('id_obat')[$i])->update('obat',array('stok' => $obat));
 			}
-
 			$this->cart->destroy();
 			redirect('ta_apotek/load_transaksi','refresh');
 		}
@@ -89,47 +107,6 @@ class TA_Apotek extends CI_Controller {
 		$this->cart->insert($data);
 		redirect('ta_apotek/load_transaksi/'.$result,'refresh');
 			
-	}
-
-	public function clear_cart()
-	{	
-		
-		$this->cart->destroy();
-		redirect('ta_apotek/load_transaksi','refresh');
-	}
-	public function update_cart()
-	{
-		
-		if ($this->input->post('update')) {
-			for($i=0;$i<count($this->input->post('rowid'));$i++){
-				$data = array(
-					'rowid' => $this->input->post('rowid')[$i],
-					'qty'   => $this->input->post('qty')[$i]
-				);
-				$this->cart->update($data);
-			}
-		redirect('ta_apotek/load_transaksi','refresh');		
-		}
-		else
-			if($this->input->post('bayar')){
-				$total = $this->input->post('total');
-				$bayar = $this->input->post('bayaran');
-				$kembali = $bayar-$total;
-				if($total > $bayar){
-					$this->session->set_flashdata('utang','Uang Kurang Rp. '.number_format($kembali));
-					redirect('ta_apotek/load_transaksi','refresh');
-				}
-				else
-				{
-					$this->load->model('m_apotek');
-					$this->m_apotek->m_simpan_cart();
-					redirect('ta_apotek/load_history','refresh');
-				}
-			}
-			else
-				if($this->input->post('')){
-
-			}
 	}
 
 	public function delete_obat($id)

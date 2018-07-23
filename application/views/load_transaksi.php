@@ -53,9 +53,10 @@
 				<tr align="center">
 					<input type="hidden" name="id_obat[]" value="<?=$obat['id']?>">
 					<input type="hidden" name="rowid[]" value="<?=$obat['rowid']?>">
-					<input type="hidden" name="id_obat" value="<?=$obat['id']?>">
+					<input type="hidden" name="idobat" value="<?=$obat['id']?>">
 					<input type="hidden" name="jumlah" value="<?=$obat['qty']?>">
-					<input type="hidden" name="rowid" value="<?=$obat['rowid']?>">
+					<input type="hidden" name="row_id" value="<?=$obat['rowid']?>">
+					<input type="hidden" name="quantity[]" value="<?=$obat['qty']?>">
 					<td><?= $no++ ?></td>
 					<td><?= $obat['name'] ?></td>
 					<td>Rp. <?= number_format($obat['price']); ?></td>
