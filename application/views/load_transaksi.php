@@ -81,10 +81,15 @@
 		<br>
 		<?php
 			if($this->session->flashdata('utang')){
-
-			
 		?>
-		<div class="alert alert-danger" style="width: 200px; height: 100px; padding: 10px;"><?= $this->session->flashdata('utang')?></div>
+			<div class="alert alert-danger" style="width: 250px; height: 100px; padding: 10px;"><?= $this->session->flashdata('utang')?></div>
+		<?php
+			}
+		?>
+		<?php
+			if($this->session->flashdata('berhasil')){
+		?>
+			<div class="alert alert-success" style="width: 250px; height: 100px; padding: 10px;"><?= $this->session->flashdata('berhasil')?></div>
 		<?php
 			}
 		?>

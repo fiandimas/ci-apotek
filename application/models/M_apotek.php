@@ -89,7 +89,7 @@ class M_apotek extends CI_Model {
 				return $tm_nota->id_nota;
 			} else {
 				return 0;
-			}
+			}	
 	}
 	public function m_add_obat()
 	{

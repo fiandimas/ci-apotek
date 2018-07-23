@@ -11,23 +11,26 @@ class TA_Apotek extends CI_Controller {
 	public function load_obat()
 	{
 		$data['konten']="load_obat";
+		$data['a1']='active';
+		$data['a2']='';
+		$data['a3']='';
 		$this->load->view('ita_apotek',$data);
 	}
 
 	public function load_transaksi()
 	{
 		$data['konten']="load_transaksi";
+		$data['a1']='';
+		$data['a2']='active';
+		$data['a3']='';
 		$this->load->view('ita_apotek',$data);
-	}
-	public function cek()
-	{
-		foreach ($this->cart->contents() as $key) {
-			echo "<br>".$key['rowid'];
-		}
 	}
 	public function load_history()
 	{
 		$data['konten']="load_history";
+		$data['a1']='';
+		$data['a2']='';
+		$data['a3']='active';
 		$this->load->view('ita_apotek',$data);
 	}
 
@@ -85,6 +88,23 @@ class TA_Apotek extends CI_Controller {
 			}
 			$this->cart->destroy();
 			redirect('ta_apotek/load_transaksi','refresh');
+		}else
+		if($this->input->post('bayar')){
+			$this->form_validation->set_rules('nama_pembeli', 'Nama Pembeli', 'trim|required');
+			$this->form_validation->set_rules('bayaran', 'Bayar', 'trim|required');
+
+			if ($this->form_validation->run()) {
+				$this->load->model('m_apotek','apotek');
+
+				$this->apotek->m_simpan_cart();
+
+				$this->cart->destroy();
+				$this->session->set_flashdata('berhasil', 'Transaksi Berhasil');
+				redirect('ta_apotek/load_transaksi','refresh');				
+			} else {
+				$this->session->set_flashdata('utang',validation_errors());
+				redirect('ta_apotek/load_transaksi','refresh');
+			}
 		}
 	}
 	public function add_cart($id)

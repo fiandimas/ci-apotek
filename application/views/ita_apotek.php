@@ -69,9 +69,9 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
-						<li><a href="<?= base_url('index.php/ta_apotek/load_obat')?>" class="active"><i class="lnr lnr-list"></i> <span>Daftar Obat</span></a></li>
-						<li><a href="<?= base_url('index.php/ta_apotek/load_transaksi')?>" class=""><i class="lnr lnr-cart"></i> <span>Transaksi</span></a></li>
-						<li><a href="<?= base_url('index.php/ta_apotek/load_history')?>" class=""><i class="lnr lnr-history"></i> <span>Histori</span></a></li>
+						<li><a href="<?= base_url('index.php/ta_apotek/load_obat')?>" class="<?= $a1?>"><i class="lnr lnr-list"></i> <span>Daftar Obat</span></a></li>
+						<li><a href="<?= base_url('index.php/ta_apotek/load_transaksi')?>" class="<?= $a2?>"><i class="lnr lnr-cart"></i> <span>Transaksi</span></a></li>
+						<li><a href="<?= base_url('index.php/ta_apotek/load_history')?>" class="<?= $a3?>"><i class="lnr lnr-history"></i> <span>Histori</span></a></li>
 					</ul>
 				</nav>
 			</div>
