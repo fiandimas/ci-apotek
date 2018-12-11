@@ -27,9 +27,12 @@ class M_apotek extends CI_Model {
 					);
 					$this->session->set_userdata($session);
 					redirect('ta_apotek/load_obat','refresh');
-				}				 
+				}else{
+          $this->session->set_flashdata('fail','Incorrect password or username!');
+          redirect('ta_apotek','refresh');
+        }				 
 			} else {
-				# code...
+        
 			}	
 		}
 	}

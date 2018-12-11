@@ -33,6 +33,11 @@
 								<div class="logo text-center"><img src="<?=base_url()?>asset/ta_apotek/img/logo-dark.png" alt="Klorofil Logo"></div>
 								<p class="lead">Login to your account</p>
 							</div>
+              <?php if($this->session->flashdata('fail')){ ?>
+                <div class="alert alert-danger">
+                <?= $this->session->flashdata('fail') ?>
+                </div>
+              <?php } ?> 
 							<form class="form-auth-small" action="<?=base_url('index.php/ta_apotek/login')?>" method="post">
 								<div class="form-group">
 									<label for="signin-user" class="control-label sr-only">Username</label>
