@@ -44,19 +44,19 @@
         	<h4 class="modal-title" id="myModalLabel">Tambah Obat</h4>
       	</div>
       	<div class="modal-body">
-       		<form method="post" action="<?= base_url('index.php/ta_apotek/add_obat')?>">
+       		<form method="post" action="<?= base_url('index.php/ta_apotek/add_obat')?>" class="form-group">
        			<table>
        				<input type="text" name="id" value="<?= $obat->id_obat ?>" hidden="hidden">
        				<input type="text" name="nama_obat" value="<?= $obat->nama_obat ?>" hidden="hidden">
        				<input type="text" name="harga" value="<?= $obat->harga ?>" hidden="hidden">
        				<tr>
        					<td>Nama Obat</td>
-       					<td><input type="text" name="nama_obat" required></td>
+       					<td><input type="text" name="nama_obat" required  class="form-control"></td>
        				</tr>
        				<tr>
        					<td>Jenis</td>
        					<td>
-       						<select name="id_jenis">
+       						<select name="id_jenis" class="form-control">
        							<?php
 									$no=1;
 									$query = $this->db->get('jenis')
@@ -74,11 +74,11 @@
        				</tr>
        				<tr>
        					<td>Harga</td>
-       					<td><input type="number" name="harga" required></td>
+       					<td><input type="number" name="harga" required class="form-control"></td>
        				</tr>
        				<tr>
-       					<td>stok</td>
-       					<td><input type="number" name="stok" required></td>
+       					<td>Stok</td>
+       					<td><input type="number" name="stok" required class="form-control"></td>
        				</tr>
        				<tr>
        					<td><input type="submit" name="proses" class="btn btn-success" value="Tambah"></td>
@@ -112,12 +112,12 @@
        			<table>
        				<tr>
        					<td>Nama Obat</td>
-       					<td><input type="text" name="nama_obat" value="<?= $obat->nama_obat?>"></td>
+       					<td><input type="text" name="nama_obat" value="<?= $obat->nama_obat?>" class="form-control"></td>
        				</tr>
        				<tr>
        					<td>Jenis</td>
        					<td>
-       						<select name="jenis">
+       						<select name="jenis" class="form-control">
        							<?php
 
 									$no=1;
@@ -135,11 +135,11 @@
        				</tr>
        				<tr>
        					<td>Harga</td>
-       					<td><input type="number" name="harga" value="<?= $obat->harga?>"></td>
+       					<td><input type="number" name="harga" value="<?= $obat->harga?>" class="form-control"></td>
        				</tr>
        				<tr>
        					<td>stok</td>
-       					<td><input type="number" name="stok" value="<?= $obat->stok?>"></td>
+       					<td><input type="number" name="stok" value="<?= $obat->stok?>" class="form-control"></td>
        				</tr>
        				<tr>
        					<td><input type="submit" name="proses" class="btn btn-success" value="Ubah"></td>
@@ -153,7 +153,6 @@
     	</div>
   	</div>
 </div>
-
 <?php
 	}	
 ?>

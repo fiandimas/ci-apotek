@@ -58,7 +58,11 @@ class M_apotek extends CI_Model {
 						->row();
 		if($cek){
 			
-			$kembali = $bayar-$total;
+      $kembali = $bayar-$total;
+      if ($kembali < 0){
+        $this->session->set_flashdata('utang','Uang kurang : '.$kembali);
+        redirect('ta_apotek/load_transaksi','refresh');
+      }
 			$data =array(
 				'id_nota'		=> NULL,
 				'id_pembeli'	=> $tes->id_pembeli,

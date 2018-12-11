@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2018 at 05:31 PM
+-- Generation Time: Dec 11, 2018 at 01:08 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.1.19
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ta_apotek`
+-- Database: `ci-apotek`
 --
 
 -- --------------------------------------------------------
@@ -84,11 +84,7 @@ CREATE TABLE `nota` (
 --
 
 INSERT INTO `nota` (`id_nota`, `id_pembeli`, `total`, `bayar`, `kembali`, `tanggal`) VALUES
-(1, 2, 10000, 10000, 0, '2018-05-26'),
-(2, 3, 10000, 15000, 5000, '2018-07-23'),
-(3, 4, 60000, 70000, 10000, '2018-07-23'),
-(4, 5, 10000, 15000, 5000, '2018-07-23'),
-(5, 6, 20000, 40000, 20000, '2018-07-23');
+(1, 2, 70000, 100000, 30000, '2018-12-11');
 
 -- --------------------------------------------------------
 
@@ -109,9 +105,9 @@ CREATE TABLE `obat` (
 --
 
 INSERT INTO `obat` (`id_obat`, `id_jenis`, `nama_obat`, `harga`, `stok`) VALUES
-(1, 3, 'Anti Masuk Angin', 10000, 99),
+(1, 3, 'Anti Masuk Angin', 10000, 94),
 (2, 2, 'Anti Cedera', 20000, 99),
-(3, 1, 'Anti Lapar', 5000, 100);
+(3, 1, 'Anti Lapar', 5000, 106);
 
 -- --------------------------------------------------------
 
@@ -129,12 +125,8 @@ CREATE TABLE `pembeli` (
 --
 
 INSERT INTO `pembeli` (`id_pembeli`, `nama_pembeli`) VALUES
-(1, 'Dimas'),
-(2, 'Aome1'),
-(3, 'Aome2'),
-(4, 'Scarlet3'),
-(5, 'Aome4'),
-(6, 'Aome5');
+(1, 'default'),
+(2, 'Scarlet1');
 
 -- --------------------------------------------------------
 
@@ -154,12 +146,8 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_nota`, `id_obat`, `jumlah`) VALUES
-(1, 1, 1, 1),
-(2, 2, 1, 1),
-(3, 3, 1, 2),
-(4, 3, 2, 2),
-(5, 4, 1, 1),
-(6, 5, 2, 1);
+(1, 1, 1, 3),
+(2, 1, 2, 2);
 
 --
 -- Indexes for dumped tables
@@ -235,7 +223,7 @@ ALTER TABLE `kasir`
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `obat`
@@ -247,13 +235,13 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT for table `pembeli`
 --
 ALTER TABLE `pembeli`
-  MODIFY `id_pembeli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_pembeli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
